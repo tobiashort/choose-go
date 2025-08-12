@@ -33,18 +33,22 @@ draw:
 	for {
 		n := Must2(os.Stdin.Read(buf))
 		switch string(buf[:n]) {
-		case ansi.InputKeyUp:
-			if selectedIndex > 0 {
-				selectedIndex--
-			} else {
-				selectedIndex = len(options) - 1
-			}
-			goto redraw
+		case "j":
+			fallthrough
 		case ansi.InputKeyDown:
 			if selectedIndex < len(options)-1 {
 				selectedIndex++
 			} else {
 				selectedIndex = 0
+			}
+			goto redraw
+		case "k":
+			fallthrough
+		case ansi.InputKeyUp:
+			if selectedIndex > 0 {
+				selectedIndex--
+			} else {
+				selectedIndex = len(options) - 1
 			}
 			goto redraw
 		case ansi.InputCR:
@@ -54,6 +58,8 @@ draw:
 		case ansi.InputCRLF:
 			ok = true
 			goto done
+		case "q":
+			fallthrough
 		case ansi.InputEscape:
 			ok = false
 			goto done
