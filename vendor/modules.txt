@@ -1,0 +1,20 @@
+# github.com/tobiashort/ansi-go v0.0.0-20250812160856-192158109001
+## explicit; go 1.24
+github.com/tobiashort/ansi-go
+# github.com/tobiashort/cfmt-go v0.0.0-20250811054542-a128c4899fb5
+## explicit; go 1.24
+github.com/tobiashort/cfmt-go
+# github.com/tobiashort/isatty-go v0.0.0-20250729193227-00bbda39413c
+## explicit; go 1.24
+github.com/tobiashort/isatty-go
+# github.com/tobiashort/utils-go v0.0.0-20250809133151-e63ee93a3da7
+## explicit; go 1.24.3
+github.com/tobiashort/utils-go/must
+# golang.org/x/sys v0.35.0
+## explicit; go 1.23.0
+golang.org/x/sys/plan9
+golang.org/x/sys/unix
+golang.org/x/sys/windows
+# golang.org/x/term v0.34.0
+## explicit; go 1.23.0
+golang.org/x/term
