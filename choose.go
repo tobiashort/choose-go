@@ -12,7 +12,7 @@ import (
 	"golang.org/x/term"
 )
 
-func Single(options []string) (int, string, bool) {
+func Single(prompt string, options []string) (int, string, bool) {
 	oldState := Must2(term.MakeRaw(int(os.Stdin.Fd())))
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
@@ -20,7 +20,7 @@ func Single(options []string) (int, string, bool) {
 	selectedIndex := 0
 
 draw:
-	fmt.Printf("\r\n")
+	fmt.Printf("%s\r\n", prompt)
 	for index, option := range options {
 		if index == selectedIndex {
 			cfmt.Printf(" #yB{> %s}\r\n", option)
@@ -28,7 +28,6 @@ draw:
 			fmt.Printf("   %s\r\n", option)
 		}
 	}
-	fmt.Printf("\r\n")
 
 	buf := make([]byte, 3)
 	for {
@@ -65,7 +64,7 @@ draw:
 	}
 
 redraw:
-	fmt.Print(ansi.MoveCursorUp(len(options) + 2))
+	fmt.Print(ansi.MoveCursorUp(len(options) + 1))
 	goto draw
 
 done:

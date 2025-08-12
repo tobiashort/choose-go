@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	idx, option, ok := choose.Single([]string{
+	idx, option, ok := choose.Single("Choose your poison:", []string{
 		"Option 1",
 		"Option 2",
 		"Option 3",
