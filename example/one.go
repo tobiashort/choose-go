@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	idx, _, ok := choose.Single("Choose your poison:", []string{
+	idx, _, ok := choose.One("Choose your poison:", []string{
 		"Venomous Snake Milkshake",
 		"Radioactive Sushi Platter",
 		"Carolina Reaper Lava Stew",

@@ -1,5 +1,5 @@
-github.com/tobiashort/ansi-go v0.0.0-20250812202712-75d9cfa92689 h1:DwRXRjZvWmafJF+TaYHmu2PAcQ+Rq4J2SZiBCzHwUK8=
-github.com/tobiashort/ansi-go v0.0.0-20250812202712-75d9cfa92689/go.mod h1:yPoTE564mrx3g7842t9vvduaGlzo38iKRjIqtGANbyU=
+github.com/tobiashort/ansi-go v0.0.0-20250813181820-5a307182d595 h1:2iu/G9i3uNLLFujxGOaTUw9DQd8NTHD71k5Qhn9P7u0=
+github.com/tobiashort/ansi-go v0.0.0-20250813181820-5a307182d595/go.mod h1:yPoTE564mrx3g7842t9vvduaGlzo38iKRjIqtGANbyU=
 github.com/tobiashort/cfmt-go v0.0.0-20250811054542-a128c4899fb5 h1:c0ofytvJ1jn9Aanz8sQwVY5sPGjfEzztdgr09siRIyA=
 github.com/tobiashort/cfmt-go v0.0.0-20250811054542-a128c4899fb5/go.mod h1:8pFtdCkzBpY6F+Kmqs+Mi7IJL7ysW+lershVsCLWMcc=
 github.com/tobiashort/isatty-go v0.0.0-20250729193227-00bbda39413c h1:bHu0yDhCDLYWwUvEf+5KUOzb2VNX8F5E046AWbHkHeY=

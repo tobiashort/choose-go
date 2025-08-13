@@ -10,16 +10,28 @@ import (
 	"github.com/tobiashort/ansi-go"
 	"github.com/tobiashort/cfmt-go"
 	"github.com/tobiashort/orderedmap-go"
+	"github.com/tobiashort/utils-go/assert"
 
 	. "github.com/tobiashort/utils-go/must"
 )
 
-func Multiple(prompt string, options []string) ([]string, bool) {
+func Many(prompt string, options []string) ([]string, bool) {
+	return ManyN(prompt, options, len(options))
+}
+
+func ManyN(prompt string, options []string, n int) ([]string, bool) {
+	assert.True(n >= 2, "n must be >= 2")
+	assert.True(n <= len(options), "n must be <= len(options)")
+
 	oldState := Must2(term.MakeRaw(int(os.Stdin.Fd())))
 	defer term.Restore(int(os.Stdin.Fd()), oldState)
 
+	fmt.Print(ansi.CursorHide)
+	defer fmt.Print(ansi.CursorShow)
+
 	ok := false
 	activeIndex := 0
+	selectedCount := 0
 
 	selection := orderedmap.NewOrderedMap[string, bool]()
 	for _, option := range options {
@@ -27,7 +39,7 @@ func Multiple(prompt string, options []string) ([]string, bool) {
 	}
 
 draw:
-	fmt.Printf("%s\r\n", prompt)
+	fmt.Printf("%s (%d/%d)\r\n", prompt, selectedCount, n)
 	for index, option := range options {
 		if index == activeIndex {
 			if selected, _ := selection.Get(option); selected {
@@ -44,10 +56,31 @@ draw:
 		}
 	}
 
+	hints := ""
+	if n == len(options) {
+		hints += "(A)ll "
+	}
+	hints += "(N)one"
+	fmt.Printf("   %s", hints)
+
 	buf := make([]byte, 3)
 	for {
-		n := Must2(os.Stdin.Read(buf))
-		switch string(buf[:n]) {
+		c := Must2(os.Stdin.Read(buf))
+		switch string(buf[:c]) {
+		case "A":
+			if n == len(options) {
+				selectedCount = n
+				for option := range selection.Iterate() {
+					selection.Put(option, true)
+				}
+				goto redraw
+			}
+		case "N":
+			selectedCount = 0
+			for option := range selection.Iterate() {
+				selection.Put(option, false)
+			}
+			goto redraw
 		case "j":
 			fallthrough
 		case ansi.InputKeyDown:
@@ -69,7 +102,15 @@ draw:
 		case ansi.InputSpace:
 			option := options[activeIndex]
 			selected, _ := selection.Get(option)
-			selection.Put(option, !selected)
+			if selected {
+				selectedCount--
+				selection.Put(option, false)
+			} else {
+				if selectedCount < n {
+					selectedCount++
+					selection.Put(option, true)
+				}
+			}
 			goto redraw
 		case ansi.InputCR:
 			fallthrough
@@ -90,10 +131,11 @@ draw:
 	}
 
 redraw:
-	fmt.Print(ansi.MoveCursorUp(len(options) + 1))
+	fmt.Print(ansi.CursorMoveUp(len(options) + 1))
 	goto draw
 
 done:
+	fmt.Printf("%s\r", ansi.EraseEntireLine)
 	selectedOptions := make([]string, 0)
 	for option, selected := range selection.Iterate() {
 		if selected {

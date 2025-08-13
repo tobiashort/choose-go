@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	options, ok := choose.Multiple("For my smoothie I choose:", []string{
+	options, ok := choose.Many("For my smoothie I choose:", []string{
 		"Apple",
 		"Banana",
 		"Lemon",
